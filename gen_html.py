@@ -123,6 +123,10 @@ def chapter_page(ch, ann, prev, nxt):
 <div class="topbar">
   <a href="index.html" class="brand">滚雪球</a>
   <div class="nav-links">
+    <span class="font-ctrl">
+      <button onclick="adjFont(-1)" aria-label="缩小">A−</button>
+      <button onclick="adjFont(1)" aria-label="放大">A+</button>
+    </span>
     <a href="index.html">目录</a>
     <a href="#weread" class="only-desktop">微信读书</a>
   </div>
@@ -139,10 +143,10 @@ def chapter_page(ch, ann, prev, nxt):
       <h1 class="chap-title">第{n}章 {esc(title)}</h1>
       {f'<div class="chap-subtitle">{esc(subtitle)}</div>' if subtitle else ''}
     </div>
+    {ann_html}
     {chap_img}
     {quote_html}
     {''.join(body)}
-    {ann_html}
     
     <div class="page-nav">
       {prev_link}
@@ -168,6 +172,9 @@ def chapter_page(ch, ann, prev, nxt):
   {next_link}
 </div>
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 第{n}章</div>
+<script>
+let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.querySelector('.content').style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.querySelector('.content').style.fontSize=fs+'em'}}}})
+</script>
 </body>
 </html>'''
 
