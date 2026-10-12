@@ -347,3 +347,21 @@ body {
   border-radius: 4px;
   background: rgba(184,134,11,.1);
 }
+
+/* 章节配图 */
+.chap-img {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  margin: 40px auto 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  filter: sepia(0.08) contrast(0.95);
+  opacity: 0.92;
+}
+@media (max-width: 768px) {
+  .chap-img {
+    margin: 24px auto 20px;
+    border-radius: 6px;
+  }
+}

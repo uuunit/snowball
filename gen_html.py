@@ -86,17 +86,25 @@ def chapter_page(ch, ann, prev, nxt):
         cls = 'para para-dropcap' if i == 0 else 'para'
         body.append(f'<p class="{cls}">{esc(p)}</p>')
     
+    # 章节配图（线稿风）
+    chap_img = ''
+    for ext in ['webp', 'jpg', 'png']:
+        p = f'{ROOT}/img/ch/ch{n:02d}.{ext}'
+        if os.path.exists(p):
+            chap_img = f'<img class="chap-img" src="img/ch/ch{n:02d}.{ext}" alt="" loading="lazy">'
+            break
+
     # 金句
     quote_html = ''
     a = ann.get(n)
     if a and a.get('quote'):
         quote_html = f'<div class="quote-card">{esc(a["quote"])}<span class="q-src">——《滚雪球》第{n}章</span></div>'
-    
+
     # 注释
     ann_html = ''
     if a and a.get('annotation'):
         ann_html = f'<div class="annotation"><div class="annotation-title">✎ 注</div><div>{esc(a["annotation"])}</div></div>'
-    
+
     # 左右侧栏
     sidebar = sidebar_html(n, title)
     
@@ -131,6 +139,7 @@ def chapter_page(ch, ann, prev, nxt):
       <h1 class="chap-title">第{n}章 {esc(title)}</h1>
       {f'<div class="chap-subtitle">{esc(subtitle)}</div>' if subtitle else ''}
     </div>
+    {chap_img}
     {quote_html}
     {''.join(body)}
     {ann_html}
