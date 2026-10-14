@@ -26,8 +26,8 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(180deg, #1a1a2e 0%, #1e1a30 40%, #2a1e28 100%);
-  color: var(--paper);
+  background: linear-gradient(180deg, #f5f0e8 0%, #ede6d8 40%, #e0d8c8 100%);
+  color: var(--ink);
   overflow: hidden;
   padding: 60px 20px;
 }
@@ -35,9 +35,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 55%, rgba(184,134,11,.12), transparent 70%),
-    linear-gradient(180deg, rgba(26,26,46,.35) 0%, transparent 30%, transparent 50%, rgba(26,26,46,.6) 75%, var(--paper) 100%);
+  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(184,134,11,.06), transparent 70%);
   z-index: 1;
 }
 .hero-img {
@@ -45,13 +43,10 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  opacity: .55;
-  filter: grayscale(.6) contrast(1.05) brightness(.9);
-  /* 边缘羽化：中心清晰，四周融入背景 */
-  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, #000 30%, rgba(0,0,0,.6) 55%, transparent 80%);
-  mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, #000 30%, rgba(0,0,0,.6) 55%, transparent 80%);
+  object-fit: contain;
+  object-position: center;
+  opacity: .85;
+  filter: contrast(1.05);
 }
 .hero-content { position: relative; z-index: 2; max-width: 900px; }
 .hero-kicker {
@@ -67,18 +62,18 @@ body {
   font-weight: 700;
   letter-spacing: .08em;
   margin-bottom: 24px;
-  text-shadow: 0 4px 40px rgba(0,0,0,.5);
+  text-shadow: 0 2px 20px rgba(245,240,232,.5);
 }
 .hero-sub {
   font-size: clamp(1rem, 2vw, 1.3rem);
-  color: rgba(245,240,232,.85);
+  color: rgba(26,26,46,.7);
   max-width: 560px;
   margin: 0 auto 40px;
   font-style: italic;
 }
 .hero-meta {
   font-size: .9rem;
-  color: rgba(245,240,232,.6);
+  color: rgba(26,26,46,.5);
   letter-spacing: .2em;
 }
 .scroll-hint {
@@ -87,7 +82,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  color: rgba(245,240,232,.6);
+  color: rgba(26,26,46,.4);
   font-size: .8rem;
   letter-spacing: .3em;
   animation: float 2.5s ease-in-out infinite;
