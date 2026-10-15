@@ -271,25 +271,38 @@ def index_page(quotes):
 
 <div class="weread-card">
   <div class="weread-header">
-    <span class="weread-logo">微信读书</span>
-    <span class="weread-tag">读者评价</span>
+    <span class="weread-logo">读者评价</span>
+    <span class="weread-tag">多平台</span>
   </div>
   <div class="weread-body">
     <div class="weread-score">
       <div class="weread-value">84.2<span class="weread-unit">%</span></div>
-      <div class="weread-label">推荐值</div>
+      <div class="weread-label">微信读书推荐值 · 1808人点评</div>
+    </div>
+    <div class="weread-score">
+      <div class="weread-value">8.5<span class="weread-unit">分</span></div>
+      <div class="weread-label">豆瓣评分 · 1190人评价</div>
     </div>
     <div class="weread-stats">
-      <div class="weread-stat"><b>1,808</b> 人点评</div>
-      <div class="weread-stat"><b>8.5万</b> 人在读</div>
+      <div class="weread-stat"><b>8.5万</b> 人在读（微信读书）</div>
       <div class="weread-stat"><b>72.8万</b> 字</div>
+      <div class="weread-stat"><b>1526</b> 人推荐 / <b>203</b> 一般 / <b>79</b> 不行</div>
     </div>
     <div class="weread-bars">
       <div class="bar-row"><span class="bar-label">推荐</span><div class="bar-bg"><div class="bar-fill bar-good" style="width:84%"></div></div><span class="bar-num">1526</span></div>
       <div class="bar-row"><span class="bar-label">一般</span><div class="bar-bg"><div class="bar-fill bar-mid" style="width:11%"></div></div><span class="bar-num">203</span></div>
       <div class="bar-row"><span class="bar-label">不行</span><div class="bar-bg"><div class="bar-fill bar-bad" style="width:5%"></div></div><span class="bar-num">79</span></div>
     </div>
-    <a class="weread-link" href="https://weread.qq.com/web/reader/75d327605dd94175d0ee94a" target="_blank">在微信读书阅读 →</a>
+    <div class="weread-reviews">
+      <div class="review-title">读者短评</div>
+      <div class="review-item">巴菲特的伟大不在于他赚了多少钱，而在于他很小时就找到自己所热爱的事业，并用终身去践行。 — 豆瓣网友</div>
+      <div class="review-item">从下半部开始非常精彩，身临其境地感受了巴菲特是个怎样的人。价值投资、复利的威力，背后是他强大的专注力和独立思考能力。 — 豆瓣网友</div>
+      <div class="review-item">趁着疫情期间重读此书，依然爱不释手收获良多。想要获得此书乐趣，需要了解颇多背景资料和知识储备。 — 豆瓣网友</div>
+    </div>
+    <div class="weread-links">
+      <a class="weread-link" href="https://weread.qq.com/web/reader/75d327605dd94175d0ee94a" target="_blank">微信读书阅读 →</a>
+      <a class="weread-link" href="https://book.douban.com/subject/3605924/" target="_blank">豆瓣 8.5 →</a>
+    </div>
   </div>
 </div>
 

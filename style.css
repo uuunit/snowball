@@ -329,6 +329,11 @@ body {
   transition: background .2s;
 }
 .weread-link:hover { background: rgba(184,134,11,.2); }
+.weread-reviews { flex-basis: 100%; margin-top: 8px; padding: 16px; background: rgba(0,0,0,.02); border-radius: 8px; }
+.review-title { font-size: .8rem; color: var(--gray); margin-bottom: 10px; letter-spacing: .15em; }
+.review-item { font-size: .85rem; color: var(--ink); line-height: 1.7; margin-bottom: 12px; padding-left: 12px; border-left: 2px solid rgba(184,134,11,.2); }
+.weread-links { flex-basis: 100%; display: flex; gap: 12px; }
+.weread-links .weread-link { flex: 1; }
 
 /* 右栏 */
 .aside {
