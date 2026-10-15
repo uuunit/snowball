@@ -5,6 +5,33 @@ import json, os, re, html, datetime
 ROOT = '/Volumes/T7/MacMini/Project/snowball-web'
 DATA = json.load(open(f'{ROOT}/json/book_structure.json'))
 
+# 微信读书热门划线（前缀文本 → 划线人数）
+HIGHLIGHTS = [
+    ('钱可以让我独立', 1800),
+    ('如果父母忽视', 1638),
+    ('生活可能看起来很简单', 1296),
+    ('他说他最喜欢奥马哈', 1200),
+    ('与比你优秀的人待在一起', 1050),
+    ('短期内，市场是投票器', 828),
+]
+
+def highlight_para(p):
+    """检查段落是否包含热门划线，高亮匹配部分"""
+    for hl_text, count in HIGHLIGHTS:
+        if hl_text in p:
+            idx = p.index(hl_text)
+            rest = p[idx:]
+            end = len(hl_text)
+            for i in range(len(hl_text), min(len(rest), 200)):
+                if rest[i] in '。！？':
+                    end = i + 1
+                    break
+            matched = p[idx:idx+end]
+            before = p[:idx]
+            after = p[idx+end:]
+            return f'{esc(before)}<mark class="hl" title="{count}人划线">{esc(matched)}</mark>{esc(after)}'
+    return esc(p)
+
 def esc(s):
     return html.escape(s, quote=False)
 
@@ -87,7 +114,7 @@ def chapter_page(ch, ann, prev, nxt):
     body = []
     for i, p in enumerate(paras):
         cls = 'para para-dropcap' if i == 0 else 'para'
-        body.append(f'<p class="{cls}">{esc(p)}</p>')
+        body.append(f'<p class="{cls}">{highlight_para(p)}</p>')
     
     # 章节配图（线稿风）
     chap_img = ''
@@ -299,6 +326,12 @@ def index_page(quotes):
       <div class="review-item">从下半部开始非常精彩，身临其境地感受了巴菲特是个怎样的人。价值投资、复利的威力，背后是他强大的专注力和独立思考能力。 — 豆瓣网友</div>
       <div class="review-item">趁着疫情期间重读此书，依然爱不释手收获良多。想要获得此书乐趣，需要了解颇多背景资料和知识储备。 — 豆瓣网友</div>
     </div>
+    <div class="weread-reviews">
+      <div class="review-title">微信读书 5 星书评</div>
+      <div class="review-item"><div class="review-author">書架</div><div class="review-content">人生就是滚雪球，最重要的是找到一条又湿又长的雪坡，湿的雪是指好的资产，长的坡是指时间，慢慢收股息，慢慢变富。巴菲特一生的投资收益率是5万5千倍。最重要的投资规则是：不要亏钱。</div></div>
+      <div class="review-item"><div class="review-author">wanderer318</div><div class="review-content">读完这本书，了解了巴菲特充满传奇的一生。他的人格魅力不仅创造了伯克希尔哈撒韦的天量财富，更为整个世界无数追求财富的人传播了智慧。真正的成功是大道至简的。</div></div>
+      <div class="review-item"><div class="review-author">尤小路</div><div class="review-content">"股神"是一个神话，传记让他成了一个人。本书作为传记，没有那么密集的投资"干货"，多数是巴菲特生平细节的描述。但这些事件组成了当下"股神巴菲特"的形象。</div></div>
+    </div>
     <div class="weread-links">
       <a class="weread-link" href="https://weread.qq.com/web/reader/75d327605dd94175d0ee94a" target="_blank">微信读书阅读 →</a>
       <a class="weread-link" href="https://book.douban.com/subject/3605924/" target="_blank">豆瓣 8.5 →</a>
@@ -320,18 +353,7 @@ def index_page(quotes):
       <div class="highlight-item"><span class="hl-count">1050人划</span><span class="hl-text">与比你优秀的人待在一起是一件很有收获的事，因为你会得到提高。如果你周围都是不如你的人，很快，你就会顺着竿儿往下滑。</span></div>
       <div class="highlight-item"><span class="hl-count">828人划</span><span class="hl-text">短期内，市场是投票器；而在长期，市场是称重器。</span></div>
     </div>
-  </div>
-</div>
-
-<div class="weread-card">
-  <div class="weread-header">
-    <span class="weread-logo">微信读书书评</span>
-    <span class="weread-tag">5星推荐</span>
-  </div>
-  <div class="weread-body">
-    <div class="review-item"><div class="review-author">書架</div><div class="review-content">人生就是滚雪球，最重要的是找到一条又湿又长的雪坡，湿的雪是指好的资产，长的坡是指时间，慢慢收股息，慢慢变富。巴菲特一生的投资收益率是5万5千倍。最重要的投资规则是：不要亏钱。</div></div>
-    <div class="review-item"><div class="review-author">wanderer318</div><div class="review-content">读完这本书，了解了巴菲特充满传奇的一生。他的人格魅力不仅创造了伯克希尔哈撒韦的天量财富，更为整个世界无数追求财富的人传播了智慧。真正的成功是大道至简的。</div></div>
-    <div class="review-item"><div class="review-author">尤小路</div><div class="review-content">"股神"是一个神话，传记让他成了一个人。本书作为传记，没有那么密集的投资"干货"，多数是巴菲特生平细节的描述。但这些事件组成了当下"股神巴菲特"的形象。</div></div>
+    <div class="hl-note" style="margin-top:12px;font-size:.8rem;color:var(--gray);text-align:center">↑ 划线内容已在对应章节正文中高亮标注</div>
   </div>
 </div>
 

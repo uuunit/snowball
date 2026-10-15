@@ -349,6 +349,28 @@ body {
 }
 .hl-text { font-size: .9rem; line-height: 1.7; color: var(--ink); }
 
+/* 正文中划线高亮 */
+mark.hl {
+  background: linear-gradient(180deg, transparent 60%, rgba(184,134,11,.25) 60%);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+  cursor: help;
+}
+mark.hl::after {
+  content: attr(title);
+  font-size: .7rem;
+  color: var(--gold);
+  background: rgba(184,134,11,.1);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-left: 4px;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  mark.hl::after { display: none; }
+}
+
 /* 微信书评 */
 .review-author { font-size: .8rem; color: var(--crimson); font-weight: 600; margin-bottom: 4px; }
 .review-content { font-size: .88rem; line-height: 1.7; color: var(--ink); padding-left: 12px; border-left: 2px solid rgba(184,134,11,.15); }
