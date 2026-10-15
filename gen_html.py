@@ -101,9 +101,7 @@ def part_page(part, idx):
   </div>
 </div>
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 线稿极简插画版</div>
-<script>
-let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
-</script>
+<script src="common.js"></script>
 </body>
 </html>'''
 
@@ -118,7 +116,7 @@ def chapter_page(ch, ann, prev, nxt):
     body = []
     for i, p in enumerate(paras):
         cls = 'para para-dropcap' if i == 0 else 'para'
-        body.append(f'<p class="{cls}">{highlight_para(p)}</p>')
+        body.append(f'<p class="{cls}" id="para-{i}">{highlight_para(p)}</p>')
     
     # 章节配图（线稿风）
     chap_img = ''
@@ -163,9 +161,18 @@ def chapter_page(ch, ann, prev, nxt):
       <button onclick="adjFont(-1)" aria-label="缩小">A−</button>
       <button onclick="adjFont(1)" aria-label="放大">A+</button>
     </span>
+    <span class="search-ctrl"><button onclick="toggleSearch()" aria-label="搜索">🔍</button></span>
     <a href="index.html">目录</a>
     <a href="#weread" class="only-desktop">微信读书</a>
   </div>
+</div>
+
+<div class="search-modal" id="searchModal">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="搜索全书 72.8 万字内容…" oninput="onSearchInput(this.value)">
+    <button class="search-close" onclick="toggleSearch()">✕</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
 </div>
 
 <div class="layout">
@@ -208,11 +215,8 @@ def chapter_page(ch, ann, prev, nxt):
   {next_link}
 </div>
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 第{n}章</div>
-<script>
-let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
-window.addEventListener('scroll',()=>{{let h=document.documentElement.scrollHeight-window.innerHeight;let p=Math.min(100,Math.max(0,window.scrollY/h*100));let f=document.getElementById('progressFill');if(f)f.style.width=p+'%'}})
-document.addEventListener('keydown',e=>{{let n=document.querySelector('.page-nav');if(!n)return;if(e.key==='ArrowLeft'&&n.dataset.prev)location.href=n.dataset.prev;if(e.key==='ArrowRight'&&n.dataset.next)location.href=n.dataset.next}})
-</script>
+<div class="back-top" id="backTop" onclick="backToTop()" title="返回顶部">↑</div>
+<script src="common.js"></script>
 </body>
 </html>'''
 
@@ -303,6 +307,11 @@ def index_page(quotes):
   <div class="scroll-hint">向下翻页</div>
 </div>
 
+<div class="search-bar">
+  <input type="text" class="search-input" placeholder="搜索全书 72.8 万字内容…" oninput="onSearchInput(this.value)">
+  <div class="search-results" id="searchResults"></div>
+</div>
+
 <div class="toc">
   <div class="toc-title">目录</div>
   <div class="toc-desc">六部 · 六十二章 · 一场持续六十年的复利人生</div>
@@ -369,11 +378,24 @@ def index_page(quotes):
 {quote_html}
 
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 纪念版 · 由 AI 生成 · {datetime.datetime.now().year}</div>
-<script>
-let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
-</script>
+<div class="back-top" id="backTop" onclick="backToTop()" title="返回顶部">↑</div>
+<script src="common.js"></script>
 </body>
 </html>'''
+
+def gen_search_index():
+    """生成搜索索引（每章标题+副标题+段落前60字摘要）"""
+    index = []
+    for p in DATA:
+        for c in p['chapters']:
+            paras = [{'i': i, 's': para[:60]} for i, para in enumerate(c['paras'])]
+            index.append({
+                'n': c['chap_no'],
+                'title': c['title'],
+                'subtitle': c.get('subtitle', ''),
+                'paras': paras
+            })
+    return index
 
 def main():
     ann = load_annotations()
@@ -402,6 +424,11 @@ def main():
         if idx % 10 == 0:
             print(f"ch{n:02d}.html ✓")
     print(f"章节页 ✓ ({len(all_chs)} 页)")
+    
+    # 搜索索引
+    sidx = gen_search_index()
+    open(f'{ROOT}/search-index.json', 'w').write(json.dumps(sidx, ensure_ascii=False))
+    print(f"search-index.json ✓ ({len(sidx)} 章, {os.path.getsize(f'{ROOT}/search-index.json')//1024}KB)")
     
     total = sum(c['char_count'] for c in all_chs)
     print(f"\n全书 {len(all_chs)} 章 · {total:,} 字")

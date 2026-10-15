@@ -18,6 +18,11 @@
   <div class="scroll-hint">向下翻页</div>
 </div>
 
+<div class="search-bar">
+  <input type="text" class="search-input" placeholder="搜索全书 72.8 万字内容…" oninput="onSearchInput(this.value)">
+  <div class="search-results" id="searchResults"></div>
+</div>
+
 <div class="toc">
   <div class="toc-title">目录</div>
   <div class="toc-desc">六部 · 六十二章 · 一场持续六十年的复利人生</div>
@@ -221,8 +226,7 @@
         </script>
 
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 纪念版 · 由 AI 生成 · 2026</div>
-<script>
-let fs=1;function adjFont(d){fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}window.addEventListener('load',()=>{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){fs=s;document.documentElement.style.fontSize=fs+'em'}})
-</script>
+<div class="back-top" id="backTop" onclick="backToTop()" title="返回顶部">↑</div>
+<script src="common.js"></script>
 </body>
 </html>
