@@ -265,6 +265,21 @@ body {
 .font-ctrl button:hover { background: rgba(184,134,11,.18); }
 .font-ctrl button:active { transform: scale(.95); }
 
+/* 阅读进度条 */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(139,38,53,.08);
+  z-index: 9999;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold), var(--crimson));
+  transition: width .15s ease-out;
+}
+
 /* 右栏 */
 .aside {
   position: sticky;

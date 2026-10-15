@@ -27,5 +27,8 @@
   </div>
 </div>
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 线稿极简插画版</div>
+<script>
+let fs=1;function adjFont(d){fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}window.addEventListener('load',()=>{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){fs=s;document.documentElement.style.fontSize=fs+'em'}})
+</script>
 </body>
 </html>

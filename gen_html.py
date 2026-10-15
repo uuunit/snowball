@@ -70,6 +70,9 @@ def part_page(part, idx):
   </div>
 </div>
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 线稿极简插画版</div>
+<script>
+let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
+</script>
 </body>
 </html>'''
 
@@ -118,8 +121,10 @@ def chapter_page(ch, ann, prev, nxt):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>第{n}章 {esc(title)} - 滚雪球</title>
 <link rel="stylesheet" href="style.css">
+{f'<link rel="prefetch" href="{nxt[1]}">' if nxt else ''}
 </head>
 <body>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 <div class="topbar">
   <a href="index.html" class="brand">滚雪球</a>
   <div class="nav-links">
@@ -148,7 +153,7 @@ def chapter_page(ch, ann, prev, nxt):
     {quote_html}
     {''.join(body)}
     
-    <div class="page-nav">
+    <div class="page-nav" data-prev="{prev[1] if prev else ''}" data-next="{nxt[1] if nxt else ''}">
       {prev_link}
       {next_link}
     </div>
@@ -174,6 +179,8 @@ def chapter_page(ch, ann, prev, nxt):
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 第{n}章</div>
 <script>
 let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
+window.addEventListener('scroll',()=>{{let h=document.documentElement.scrollHeight-window.innerHeight;let p=Math.min(100,Math.max(0,window.scrollY/h*100));let f=document.getElementById('progressFill');if(f)f.style.width=p+'%'}})
+document.addEventListener('keydown',e=>{{let n=document.querySelector('.page-nav');if(!n)return;if(e.key==='ArrowLeft'&&n.dataset.prev)location.href=n.dataset.prev;if(e.key==='ArrowRight'&&n.dataset.next)location.href=n.dataset.next}})
 </script>
 </body>
 </html>'''
@@ -265,6 +272,9 @@ def index_page(quotes):
 {quote_html}
 
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 纪念版 · 由 AI 生成 · {datetime.datetime.now().year}</div>
+<script>
+let fs=1;function adjFont(d){{fs=Math.max(.8,Math.min(1.6,fs+d*.1));document.documentElement.style.fontSize=fs+'em';localStorage.setItem('snowball-fs',fs)}}window.addEventListener('load',()=>{{let s=parseFloat(localStorage.getItem('snowball-fs'));if(s){{fs=s;document.documentElement.style.fontSize=fs+'em'}}}})
+</script>
 </body>
 </html>'''
 
