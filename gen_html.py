@@ -8,15 +8,30 @@ DATA = json.load(open(f'{ROOT}/json/book_structure.json'))
 # 微信读书热门划线（前缀文本 → 划线人数）
 HIGHLIGHTS = [
     ('钱可以让我独立', 1800),
-    ('如果父母忽视', 1638),
-    ('生活可能看起来很简单', 1296),
+    ('我认为，这取决于人们年幼的时候父母', 1638),
+    ('之后的两个小时，巴菲特一直埋头读报', 1504),
+    ('沃伦学到了一个教训', 1296),
     ('他说他最喜欢奥马哈', 1200),
-    ('与比你优秀的人待在一起', 1050),
+    ('我学到一点，即与比你优秀的人待在一起', 1050),
     ('短期内，市场是投票器', 828),
+    ('巴菲特给我上了很多课', 792),
+    ('当你们投资的时候', 780),
+    ('当飞机摇摆', 765),
+    ('不过，因为沃伦把每1美元', 732),
+    ('第一个教训是，不要过分关注股票', 629),
+    ('花的比挣的少', 616),
+    ('还有第三个教训', 612),
+    ('沃伦自己花', 612),
+    ('虽然他在困难的环境中已经降低了投资标准', 608),
+    ('钱为自己的主人效力', 561),
+    ('沃伦找到了最有效率的送报路线', 540),
+    ('巴菲特将这次的薪水事件', 540),
+    ('以合理的价格买一个好公司', 532),
 ]
 
 def highlight_para(p):
-    """检查段落是否包含热门划线，高亮匹配部分"""
+    """检查段落是否包含热门划线，高亮所有匹配部分"""
+    matches = []
     for hl_text, count in HIGHLIGHTS:
         if hl_text in p:
             idx = p.index(hl_text)
@@ -26,11 +41,20 @@ def highlight_para(p):
                 if rest[i] in '。！？':
                     end = i + 1
                     break
-            matched = p[idx:idx+end]
-            before = p[:idx]
-            after = p[idx+end:]
-            return f'{esc(before)}<mark class="hl" title="{count}人划线">{esc(matched)}</mark>{esc(after)}'
-    return esc(p)
+            matches.append((idx, idx + end, count))
+    if not matches:
+        return esc(p)
+    matches.sort(key=lambda x: x[0])
+    result = []
+    last_end = 0
+    for start, end, count in matches:
+        if start < last_end:
+            continue
+        result.append(esc(p[last_end:start]))
+        result.append(f'<mark class="hl" title="{count}人划线">{esc(p[start:end])}</mark>')
+        last_end = end
+    result.append(esc(p[last_end:]))
+    return ''.join(result)
 
 def esc(s):
     return html.escape(s, quote=False)
@@ -348,10 +372,24 @@ def index_page(quotes):
     <div class="highlights">
       <div class="highlight-item"><span class="hl-count">1800人划</span><span class="hl-text">钱可以让我独立。然后，我就可以用我的一生去做我想做的事情。而我最想做的事情就是为自己工作，我不想让别人主导我。</span></div>
       <div class="highlight-item"><span class="hl-count">1638人划</span><span class="hl-text">如果父母忽视、抹杀你真实的行为，重视的是全世界怎么看待你，那么，你最终将使用"外部记分卡"。</span></div>
+      <div class="highlight-item"><span class="hl-count">1504人划</span><span class="hl-text">之后的两个小时，巴菲特一直埋头读报。其余6人在巴菲特周围玩闹、看电视和打电话，乘务员则在枫木餐桌上铺好桌布。</span></div>
       <div class="highlight-item"><span class="hl-count">1296人划</span><span class="hl-text">生活可能看起来很简单——但是，当另一个家伙吹错的时候，情况就不是这样了。</span></div>
-      <div class="highlight-item"><span class="hl-count">1200人划</span><span class="hl-text">他说他最喜欢奥马哈、汉堡和节俭的生活。他的成功是基于一些简单的投资理念和每天满怀热情的工作，不过，如果事情只是如此的话，为什么没有人能够复制呢？</span></div>
+      <div class="highlight-item"><span class="hl-count">1200人划</span><span class="hl-text">他说他最喜欢奥马哈、汉堡和节俭的生活。他的成功是基于一些简单的投资理念和每天满怀热情的工作。</span></div>
       <div class="highlight-item"><span class="hl-count">1050人划</span><span class="hl-text">与比你优秀的人待在一起是一件很有收获的事，因为你会得到提高。如果你周围都是不如你的人，很快，你就会顺着竿儿往下滑。</span></div>
       <div class="highlight-item"><span class="hl-count">828人划</span><span class="hl-text">短期内，市场是投票器；而在长期，市场是称重器。</span></div>
+      <div class="highlight-item"><span class="hl-count">792人划</span><span class="hl-text">巴菲特给我上了很多课，最精彩的一些来自我对他的观察。第一堂课就是：以谦卑之态屈人之兵。</span></div>
+      <div class="highlight-item"><span class="hl-count">780人划</span><span class="hl-text">当你们投资的时候，你们所做的事情是延迟消费，现在把钱投出去，在一段时间之后会获得更多的钱。</span></div>
+      <div class="highlight-item"><span class="hl-count">765人划</span><span class="hl-text">当飞机摇摆、机上的人随之颠簸的时候，巴菲特却继续着他的阅读，稳若泰山。</span></div>
+      <div class="highlight-item"><span class="hl-count">732人划</span><span class="hl-text">因为沃伦把每1美元都看成将来某一天的10美元，除了必需的花费外，他是不会多拿出1美元的。每一分钱都是雪球的一部分。</span></div>
+      <div class="highlight-item"><span class="hl-count">629人划</span><span class="hl-text">第一个教训是，不要过分关注股票的买入成本。第二个教训是不要不动脑筋地急于抓住蝇头小利。</span></div>
+      <div class="highlight-item"><span class="hl-count">616人划</span><span class="hl-text">"花的比挣的少"实际上可能是巴菲特家的座右铭，再加上这句话的必然结论，"不借债"。</span></div>
+      <div class="highlight-item"><span class="hl-count">612人划</span><span class="hl-text">还有第三个教训，是关于投资他人资金的。他不想对其他任何人的资金负责。</span></div>
+      <div class="highlight-item"><span class="hl-count">612人划</span><span class="hl-text">沃伦自己花1200美元买了一个40英亩的农场。一位农户租下了这个农场，利润则共享。</span></div>
+      <div class="highlight-item"><span class="hl-count">608人划</span><span class="hl-text">他永远都不会作的妥协就是放弃他的安全边际。正是这个特别的品质让他能熬过熊市。</span></div>
+      <div class="highlight-item"><span class="hl-count">561人划</span><span class="hl-text">钱为自己的主人效力，仿佛这是它的一项工作。</span></div>
+      <div class="highlight-item"><span class="hl-count">540人划</span><span class="hl-text">沃伦找到了最有效率的送报路线，把本属无聊的重复性工作变成自己和自己的竞赛。</span></div>
+      <div class="highlight-item"><span class="hl-count">540人划</span><span class="hl-text">巴菲特将这次的薪水事件看作是一次文化测试：那些留下来的人，才是公司真正需要的。</span></div>
+      <div class="highlight-item"><span class="hl-count">532人划</span><span class="hl-text">以合理的价格买一个好公司要远远胜过以一个好价钱买一个合理的公司。</span></div>
     </div>
     <div class="hl-note" style="margin-top:12px;font-size:.8rem;color:var(--gray);text-align:center">↑ 划线内容已在对应章节正文中高亮标注</div>
   </div>
