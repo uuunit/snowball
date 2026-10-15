@@ -280,6 +280,56 @@ body {
   transition: width .15s ease-out;
 }
 
+/* 微信读书评分卡片 */
+.weread-card {
+  max-width: 640px;
+  margin: 40px auto;
+  background: linear-gradient(135deg, #f9f6f0, #f3ede3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
+}
+.weread-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #1a1a2e, #2a1e38);
+  color: var(--paper);
+}
+.weread-logo { font-weight: 700; font-size: .95rem; letter-spacing: .1em; }
+.weread-tag { font-size: .75rem; opacity: .7; }
+.weread-body { padding: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.weread-score { text-align: center; flex-shrink: 0; }
+.weread-value { font-size: 2.4rem; font-weight: 700; color: var(--crimson); line-height: 1; }
+.weread-unit { font-size: 1rem; }
+.weread-label { font-size: .75rem; color: var(--gray); margin-top: 4px; }
+.weread-stats { flex: 1; min-width: 180px; }
+.weread-stat { font-size: .85rem; color: var(--ink); margin-bottom: 6px; }
+.weread-stat b { color: var(--crimson); font-size: 1rem; }
+.weread-bars { flex-basis: 100%; margin-top: 8px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.bar-label { width: 36px; font-size: .8rem; color: var(--gray); text-align: right; }
+.bar-bg { flex: 1; height: 8px; background: rgba(0,0,0,.05); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-good { background: linear-gradient(90deg, var(--gold), #d4a82e); }
+.bar-mid { background: linear-gradient(90deg, #b0a090, #c0b0a0); }
+.bar-bad { background: linear-gradient(90deg, #c07060, #d08070); }
+.bar-num { width: 40px; font-size: .8rem; color: var(--gray); }
+.weread-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  margin-top: 8px;
+  background: rgba(184,134,11,.1);
+  color: var(--crimson);
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: .9rem;
+  transition: background .2s;
+}
+.weread-link:hover { background: rgba(184,134,11,.2); }
+
 /* 右栏 */
 .aside {
   position: sticky;

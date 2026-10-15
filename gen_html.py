@@ -269,6 +269,30 @@ def index_page(quotes):
   {''.join(parts_html)}
 </div>
 
+<div class="weread-card">
+  <div class="weread-header">
+    <span class="weread-logo">微信读书</span>
+    <span class="weread-tag">读者评价</span>
+  </div>
+  <div class="weread-body">
+    <div class="weread-score">
+      <div class="weread-value">84.2<span class="weread-unit">%</span></div>
+      <div class="weread-label">推荐值</div>
+    </div>
+    <div class="weread-stats">
+      <div class="weread-stat"><b>1,808</b> 人点评</div>
+      <div class="weread-stat"><b>8.5万</b> 人在读</div>
+      <div class="weread-stat"><b>72.8万</b> 字</div>
+    </div>
+    <div class="weread-bars">
+      <div class="bar-row"><span class="bar-label">推荐</span><div class="bar-bg"><div class="bar-fill bar-good" style="width:84%"></div></div><span class="bar-num">1526</span></div>
+      <div class="bar-row"><span class="bar-label">一般</span><div class="bar-bg"><div class="bar-fill bar-mid" style="width:11%"></div></div><span class="bar-num">203</span></div>
+      <div class="bar-row"><span class="bar-label">不行</span><div class="bar-bg"><div class="bar-fill bar-bad" style="width:5%"></div></div><span class="bar-num">79</span></div>
+    </div>
+    <a class="weread-link" href="https://weread.qq.com/web/reader/75d327605dd94175d0ee94a" target="_blank">在微信读书阅读 →</a>
+  </div>
+</div>
+
 {quote_html}
 
 <div class="footer">滚雪球：巴菲特和他的财富人生 · 纪念版 · 由 AI 生成 · {datetime.datetime.now().year}</div>
