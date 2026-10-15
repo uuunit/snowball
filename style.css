@@ -335,6 +335,24 @@ body {
 .weread-links { flex-basis: 100%; display: flex; gap: 12px; }
 .weread-links .weread-link { flex: 1; }
 
+/* 热门划线 */
+.highlights { flex-basis: 100%; }
+.highlight-item {
+  display: flex; gap: 12px; padding: 12px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.highlight-item:last-child { border-bottom: none; }
+.hl-count {
+  flex-shrink: 0; font-size: .75rem; color: var(--gold);
+  background: rgba(184,134,11,.1); padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; height: fit-content; line-height: 1.4;
+}
+.hl-text { font-size: .9rem; line-height: 1.7; color: var(--ink); }
+
+/* 微信书评 */
+.review-author { font-size: .8rem; color: var(--crimson); font-weight: 600; margin-bottom: 4px; }
+.review-content { font-size: .88rem; line-height: 1.7; color: var(--ink); padding-left: 12px; border-left: 2px solid rgba(184,134,11,.15); }
+
 /* 右栏 */
 .aside {
   position: sticky;
