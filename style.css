@@ -348,6 +348,8 @@ body {
   white-space: nowrap; height: fit-content; line-height: 1.4;
 }
 .hl-text { font-size: .9rem; line-height: 1.7; color: var(--ink); }
+.hl-hidden { display: none; }
+.highlights.hl-expanded .hl-hidden { display: flex; }
 
 /* 正文中划线高亮 */
 mark.hl {
